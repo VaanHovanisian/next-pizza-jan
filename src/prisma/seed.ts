@@ -19,17 +19,19 @@ const createVariant = ({
 async function create() {
   const user1 = await prisma.user.create({
     data: {
-      email: "vahegabrielyan2007adwwd@gmail.com",
+      email: "jan@gmail.com",
       fullName: "Azgosh Jonyan",
       password: hashSync("Aso", 10),
+      verified: new Date(),
     },
   });
   const user2 = await prisma.user.create({
     data: {
-      email: "vahe_gabrielyan2007adwwd@gmail.com",
+      email: "jigarAdmin@gmail.com",
       fullName: "Jovani Spoyan",
       password: hashSync("Alooo", 10),
       role: "ADMIN",
+      verified: new Date(),
     },
   });
   await prisma.category.createMany({

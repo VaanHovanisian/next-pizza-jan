@@ -10,14 +10,17 @@ import { RegisterFormSchema } from "@/@types/form";
 import toast from "react-hot-toast";
 import { registerProfile } from "@/app/actions/register-profile";
 import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
+import { updateProfile } from "@/app/actions/update-profile";
 
 interface Props {
   className?: string;
   user?: User;
+  children?: React.ReactNode;
 }
 
 export const FormProfile: React.FC<Props> = (props) => {
-  const { className, user } = props;
+  const { className, user, children } = props;
   const form = useForm({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -30,16 +33,17 @@ export const FormProfile: React.FC<Props> = (props) => {
 
   const onSubmit = async (data: RegisterFormSchema) => {
     try {
-      await registerProfile(data);
-      toast.success("good register");
+      await updateProfile(data);
+      toast.success("good update");
     } catch (error) {
       console.log(error);
-      toast.error("bad register");
+      toast.error("bad update");
     }
   };
 
   return (
     <FormProvider {...form}>
+      {children}
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className={cn("", className)}
@@ -52,7 +56,15 @@ export const FormProfile: React.FC<Props> = (props) => {
           label="Confirm Password"
           type="password"
         />
-        <Button type="submit">Update</Button>
+        <div>
+          <Button type="submit">Update</Button>
+          <Button
+            onClick={async () => await signOut({ callbackUrl: "/" })}
+            type="button"
+          >
+            Sign Out
+          </Button>
+        </div>
       </form>
     </FormProvider>
   );
