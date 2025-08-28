@@ -5,13 +5,13 @@ export const isAdmin = async () => {
   try {
     const isUser = await getServerSession(authOptions);
 
-    if (!isUser?.user?.email) {
-      return null;
+    if (!isUser?.user) {
+      return false;
     }
 
-    return isUser?.user.role === "ADMIN" || null;
+    return isUser?.user.role === "ADMIN" || false;
   } catch (error) {
     console.log(error);
-    return null;
+    return false;
   }
 };
