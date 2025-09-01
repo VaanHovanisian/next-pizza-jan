@@ -1,9 +1,10 @@
 "use server";
 import { prisma } from "@/prisma/prizma-client";
 import { isAdmin as checkAdmin } from "@/lib/is-admin";
+import { DashboardIngredientSchema } from "@/@types/admin";
 
-export async function categoryAdmin(
-  data: { name: string },
+export async function ingredientAdmin(
+  data: DashboardIngredientSchema,
   action: "create" | "update" | "delete",
   id?: number
 ) {
@@ -15,7 +16,7 @@ export async function categoryAdmin(
     }
     let exist;
     if (action === "create") {
-      const category = await prisma.category.findFirst({
+      const category = await prisma.ingredient.findUnique({
         where: {
           name: data.name,
         },
@@ -26,15 +27,17 @@ export async function categoryAdmin(
         return exist;
       }
 
-      await prisma.category.create({
+      await prisma.ingredient.create({
         data: {
           name: data.name,
+          imgUrl: data.imgUrl as string,
+          price: data.price,
         },
       });
     }
 
     if (action === "update" && id) {
-      const category = await prisma.category.findUnique({
+      const category = await prisma.ingredient.findUnique({
         where: {
           id: id,
         },
@@ -44,12 +47,14 @@ export async function categoryAdmin(
         throw new Error("Category not found");
       }
 
-      await prisma.category.update({
+      await prisma.ingredient.update({
         where: {
           id: category.id,
         },
         data: {
           name: data.name,
+          imgUrl: data.imgUrl as string,
+          price: data.price,
         },
       });
     }
@@ -57,7 +62,7 @@ export async function categoryAdmin(
     let countent;
 
     if (action === "delete" && id) {
-      const category = await prisma.category.findUnique({
+      const category = await prisma.ingredient.findUnique({
         where: {
           id: id,
         },
@@ -68,7 +73,13 @@ export async function categoryAdmin(
       }
 
       const count = await prisma.product.count({
-        where: { categoryId: category.id },
+        where: {
+          ingredients: {
+            some: {
+              id: category.id,
+            },
+          },
+        },
       });
 
       if (count > 0) {
@@ -76,7 +87,7 @@ export async function categoryAdmin(
         return countent;
       }
 
-      await prisma.category.delete({
+      await prisma.ingredient.delete({
         where: {
           id: category.id,
         },

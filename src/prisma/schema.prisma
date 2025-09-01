@@ -64,7 +64,7 @@ model Ingredient {
   id           Int           @id @default(autoincrement())
   products     Product[]
   cartProducts CartProduct[]
-  name         String
+  name         String        @unique
   imgUrl       String
   price        Int
   createdAt    DateTime      @default(now())

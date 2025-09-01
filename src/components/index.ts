@@ -24,3 +24,4 @@ export * from "./basket";
 export * from "./form";
 export * from "./checkout";
 export * from "./email-template";
+export * from "./dashboard";

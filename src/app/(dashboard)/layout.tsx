@@ -12,7 +12,18 @@ export default async function DashboardLayout({
 
   return (
     <>
-      <h1>Dashboard Header</h1>
+      <header className="p-5">
+        <nav>
+          <ul className="flex items-center gap-5">
+            <li>
+              <a href="/admin/category">Category</a>
+            </li>
+            <li>
+              <a href="/admin/ingredient">Ingredient</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
       {children}
     </>
   );
