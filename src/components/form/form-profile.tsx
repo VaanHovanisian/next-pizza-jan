@@ -8,15 +8,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerFormSchema } from "@/constants/form/register-form-schema";
 import { RegisterFormSchema } from "@/@types/form";
 import toast from "react-hot-toast";
-import { registerProfile } from "@/app/actions/register-profile";
+import { updateProfile } from "@/app/actions/update-profile";
 import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
-import { updateProfile } from "@/app/actions/update-profile";
 
 interface Props {
   className?: string;
-  user?: User;
-  children?: React.ReactNode;
+  user?: User
+  children?: React.ReactNode
 }
 
 export const FormProfile: React.FC<Props> = (props) => {
@@ -56,16 +55,12 @@ export const FormProfile: React.FC<Props> = (props) => {
           label="Confirm Password"
           type="password"
         />
-        <div>
+        <div className="flex items-center gap-5">
           <Button type="submit">Update</Button>
-          <Button
-            onClick={async () => await signOut({ callbackUrl: "/" })}
-            type="button"
-          >
-            Sign Out
-          </Button>
+          <Button type="button" variant="secondary" onClick={async () => await signOut({ callbackUrl: "/" })}>Sign Out</Button>
         </div>
       </form>
+
     </FormProvider>
   );
 };

@@ -4,7 +4,6 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { FilterGroup } from "./filter-group";
 import { Title } from "./title";
-
 import { FilterPrice } from "./filter-price";
 import { useFilter } from "@/hooks/filter";
 import { useIngredient } from "@/hooks/ingredients";
@@ -17,8 +16,8 @@ interface Props {
 export const Filter: React.FC<Props> = (props) => {
   const { className } = props;
   const filter = useFilter();
-  useQueryFilter(filter);
   const { niceIngredients } = useIngredient();
+  useQueryFilter(filter);
 
   return (
     <div className={cn("flex flex-col gap-5 ", className)}>

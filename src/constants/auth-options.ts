@@ -36,7 +36,7 @@ export const authOptions: AuthOptions = {
         if (!isPassword || !user.verified) return null;
 
         return {
-          id: user.id,
+          id: user.id.toString(),
           email: user.email,
           role: user.role,
           name: user.fullName,
@@ -113,7 +113,7 @@ export const authOptions: AuthOptions = {
       });
 
       if (isUser) {
-        token.id = isUser.id;
+        token.id = isUser.id.toString();
         token.name = isUser.fullName;
         token.role = isUser.role;
       }

@@ -8,9 +8,9 @@ export const useQueryFilter = (filter: Filter) => {
   React.useEffect(() => {
     const query = qs.stringify(
       {
-        sizes: Array.from(filter.selectedSize).join(","),
-        types: Array.from(filter.selectedType).join(","),
-        ingredients: Array.from(filter.selectedIngredients).join(","),
+        sizes: Array.from(filter.selectedSize),
+        types: Array.from(filter.selectedType),
+        ingredients: Array.from(filter.selectedIngredients),
         priceFrom: filter.prices[0],
         priceTo: filter.prices[1],
       },

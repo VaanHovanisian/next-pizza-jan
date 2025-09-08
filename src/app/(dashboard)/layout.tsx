@@ -1,30 +1,34 @@
-import { isAdmin } from "@/lib/is-admin";
-import { notFound } from "next/navigation";
+import { isAdmin } from "@/lib/is-admin"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 
-export default async function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  if (!(await isAdmin())) {
-    return notFound();
-  }
 
-  return (
-    <>
-      <header className="p-5">
-        <nav>
-          <ul className="flex items-center gap-5">
-            <li>
-              <a href="/admin/category">Category</a>
-            </li>
-            <li>
-              <a href="/admin/ingredient">Ingredient</a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      {children}
-    </>
-  );
+
+
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+    if (!(await isAdmin())) {
+        return notFound()
+    }
+    return (
+        <>
+            <header>
+                <nav>
+                    <ul className="flex items-center gap-5 p-5">
+                        <li>
+                            <Link href="/admin/category">Category</Link>
+                        </li>
+                        <li>
+                            <Link href="/admin/ingredient">Ingredient</Link>
+                        </li>
+                        <li>
+                            <Link href="/admin/product">Product</Link>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            {children}
+
+
+        </>
+    )
 }

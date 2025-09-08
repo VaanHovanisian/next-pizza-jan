@@ -6,6 +6,7 @@ import { Button, Dialog, DialogTrigger, DialogContent } from "./ui";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { FormLogin, FormRegister } from "./form";
+import { DialogTitle } from "./ui/dialog";
 
 interface Props {
   className?: string;
@@ -22,6 +23,7 @@ export const AuthModal: React.FC<Props> = (props) => {
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className={cn("z-200", className)}>
+        <DialogTitle className="absolute w-0 h-0" />
         <div className="flex flex-col gap-5">
           {toggleAuth === "LogIn" ? <FormRegister /> : <FormLogin />}
           <div className="flex items-center justify-evenly">
